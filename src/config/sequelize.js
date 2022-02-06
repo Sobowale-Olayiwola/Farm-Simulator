@@ -14,6 +14,8 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("Connection has been established successfully.");
+    //Initialize farm feeding activities
+    initFarmFeedingActivities();
   })
   .catch((err) => {
     console.error("Unable to connect to the database:", err);

@@ -37,13 +37,17 @@ appEvent.on("FARM_BUILDING_FEEDING_TIME", async () => {
       const currentHealthPoint = result[i].health_point - healthPointsLost;
       if (currentHealthPoint === 0 || currentHealthPoint < 0) {
         result[i].alive = false;
-        result.save();
+        await FarmUnit.update(result[i].alive, {
+          where: { id: result[i].id },
+        });
       } else {
         const healthPointGained =
           getNumberOfHealthPointsToGain(healthPointsLost);
         result[i].health_point = currentHealthPoint;
         result[i].health_point += healthPointGained;
-        result.save();
+        await FarmUnit.update(result[i].health_point, {
+          where: { id: result[i].id },
+        });
       }
     }
   } catch (error) {

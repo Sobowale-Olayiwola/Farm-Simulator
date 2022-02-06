@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Farm_Unit = sequelize.define(
-    "Farm_Unit",
+  const FarmUnit = sequelize.define(
+    "FarmUnit",
     {
       next_feeding_time: DataTypes.DATE,
       alive: DataTypes.BOOLEAN,
@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Farm_Unit.associate = function (models) {
+  FarmUnit.associate = function (models) {
     // associations can be defined here
-    Farm_Unit.belongsTo(models.Farm_Building, {
+    FarmUnit.belongsTo(models.FarmBuilding, {
       foreignKey: "farm_building_id",
       as: "farm_building",
       onDelete: "CASCADE",
     });
   };
-  return Farm_Unit;
+  return FarmUnit;
 };

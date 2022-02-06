@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Farm_Building = sequelize.define(
-    "Farm_Building",
+  const FarmBuilding = sequelize.define(
+    "FarmBuilding",
     {
       unit_type: DataTypes.STRING,
       next_feeding_time: DataTypes.DATE,
@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Farm_Building.associate = function (models) {
+  FarmBuilding.associate = function (models) {
     // associations can be defined here
-    Farm_Building.hasMany(models.Farm_Unit, {
+    FarmBuilding.hasMany(models.FarmUnit, {
       foreignKey: "farm_building_id",
       as: "farm_unit",
       onDelete: "CASCADE",
     });
   };
-  return Farm_Building;
+  return FarmBuilding;
 };

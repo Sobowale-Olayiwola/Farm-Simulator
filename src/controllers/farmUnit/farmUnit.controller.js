@@ -1,3 +1,4 @@
+require("dotenv").config();
 import {
   successResponse,
   errorResponse,
@@ -58,6 +59,7 @@ export const updateFarmUnitHealth = async (req, res) => {
       where: { id: req.params.id, alive: true },
     });
     if (!found) throw new Error("Farm unit doesn't exist or dead");
+    found.health_point += process.env.API_FARM_UNIT_HEALTH_POINT;
     found.save();
     const result = { message: "Sucessfully updated" };
     return successResponse(req, res, result);

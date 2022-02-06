@@ -15,7 +15,10 @@ export const createFarmUnit = async (req, res) => {
     const { body } = req;
     const { farm_building_id } = body;
     const { error } = createFarmUnitSchema.validate(body);
-    if (error) throw new Error(filterJOIValidation(error.message));
+
+    if (error) {
+      throw new Error(filterJOIValidation(error.message));
+    }
     const found = await FarmBuilding.findOne({
       where: { id: farm_building_id },
     });

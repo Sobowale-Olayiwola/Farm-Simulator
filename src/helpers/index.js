@@ -30,7 +30,7 @@ export const isIdValid = (id) => {
     throw new Error("Invalid id supplied.");
   return;
 };
-export const filterJOIValidation = () => {
+export const filterJOIValidation = (message) => {
   const regex = /["]+/g;
   return message.replace(regex, "");
 };

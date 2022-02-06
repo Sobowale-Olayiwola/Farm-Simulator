@@ -7,19 +7,6 @@ import {
 import { createFarmBuildingSchema } from "../../helpers/validators/farmBuilding";
 const Sequelize = require("sequelize");
 
-// Location.findAll({
-//   attributes: {
-//     include: [
-//       [Sequelize.fn("COUNT", Sequelize.col("farmUnits.id")), "farmUnitCount"],
-//     ],
-//   },
-//   include: [
-//     {
-//       model: farmunit,
-//       attributes: [],
-//     },
-//   ],
-// });
 export const getAllFarmBuildings = async (req, res) => {
   try {
     let { page, limit } = req.query;
@@ -29,7 +16,7 @@ export const getAllFarmBuildings = async (req, res) => {
       attributes: {
         include: [
           [
-            Sequelize.fn("COUNT", Sequelize.col("FarmUnits.farm_building_id")),
+            Sequelize.fn("COUNT", Sequelize.col("FarmUnit.farm_building_id")),
             "farmUnitCount",
           ],
         ],
@@ -41,37 +28,7 @@ export const getAllFarmBuildings = async (req, res) => {
           as: "farm_unit",
         },
       ],
-      // include: [
-      //   {
-      //     model: FarmUnit,
-      //     attributes: {
-      //       include: [
-      //         [
-      //           Sequelize.fn("COUNT", Sequelize.col("farmUnit.id")),
-      //           "farm_unit_count",
-      //         ],
-      //       ],
-      //     },
-      //     as: "farm_unit",
-      //   },
-      // ],
-      // attributes: {
-      //   include: [
-      //     [
-      //       Sequelize.fn("COUNT", Sequelize.col("FarmUnits.id")),
-      //       "farm_unit_count",
-      //     ],
-      //   ],
-      // },
-      // include: [
-      //   {
-      //     model: FarmUnit,
-      //     attributes: [],
-      //     as: "farm_unit",
-      //     duplicating: true,
-      //   },
-      // ],
-      // order: [["createdAt", "DESC"]],
+
       offset: (page - 1) * limit,
       limit,
     });

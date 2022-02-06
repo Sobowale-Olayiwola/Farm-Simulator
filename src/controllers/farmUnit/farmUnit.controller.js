@@ -41,9 +41,9 @@ export const createFarmUnit = async (req, res) => {
 export const getFarmBuildingUnitHealthRecords = async (req, res) => {
   try {
     isIdValid(req.params.farm_building_id);
-    const result = await FarmUnit.findOne({
+    const result = await FarmUnit.findAll({
       where: { farm_building_id: req.params.farm_building_id },
-      attributes: ["id", "alive", "health_point", "last_time_fed"],
+      attributes: ["id", "alive", "health_point"],
     });
     result.last_time_fed = toDateTime(result.last_time_fed);
     return successResponse(req, res, result);

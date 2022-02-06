@@ -22,22 +22,13 @@ class AppEvent extends EventEmitter {}
 
 const appEvent = new AppEvent();
 
-appEvent.on("error", (error) => {
-  Logger.error(`[AppEvent Error] ${error}`);
-});
-
 appEvent.on("FARM_BUILDING_FEEDING_TIME", async () => {
   try {
-    const limit = 10;
     const result = await FarmUnit.findAll({
       where: {
         alive: true,
       },
-      offset: 1 * limit,
-      limit,
     });
-    //console.log(result);
-    console.log("param");
     for (let i = 0; i < result.length; i += 1) {
       const healthPointsLost = getNumberOfHealthPointsToReduceBy(
         result[i].last_time_fed,
@@ -46,20 +37,13 @@ appEvent.on("FARM_BUILDING_FEEDING_TIME", async () => {
       const currentHealthPoint = result[i].health_point - healthPointsLost;
       if (currentHealthPoint === 0 || currentHealthPoint < 0) {
         result[i].alive = false;
-        // await FarmUnit.update(result[i], {
-        //   where: { id: result[i].id },
-        // });
-        console.log("I died");
+        result.save();
       } else {
         const healthPointGained =
           getNumberOfHealthPointsToGain(healthPointsLost);
         result[i].health_point = currentHealthPoint;
         result[i].health_point += healthPointGained;
-        //console.log("HealthP forDB", result[i].health_point);
-        // await FarmUnit.update(result[i], {
-        //   where: { id: result[i].id },
-        // });
-        console.log("I gained weight");
+        result.save();
       }
     }
   } catch (error) {

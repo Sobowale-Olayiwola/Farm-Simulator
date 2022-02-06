@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+import { initFarmFeedingActivities } from "../helpers";
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,

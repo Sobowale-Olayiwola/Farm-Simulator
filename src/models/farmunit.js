@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const FarmUnit = sequelize.define(
     "FarmUnit",
     {
-      next_feeding_time: DataTypes.DATE,
+      last_time_fed: DataTypes.INTEGER,
       alive: DataTypes.BOOLEAN,
       farm_building_id: DataTypes.INTEGER,
       health_point: DataTypes.INTEGER,

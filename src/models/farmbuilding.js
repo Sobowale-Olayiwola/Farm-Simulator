@@ -3,8 +3,6 @@ module.exports = (sequelize, DataTypes) => {
     "FarmBuilding",
     {
       unit_type: DataTypes.STRING,
-      next_feeding_time: DataTypes.DATE,
-      email: DataTypes.STRING,
     },
     {}
   );

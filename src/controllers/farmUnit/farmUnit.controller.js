@@ -30,7 +30,7 @@ export const createFarmUnit = async (req, res) => {
       health_point: getHealthPoints(),
     };
     const newFarmUnit = await FarmUnit.create(payload);
-
+    newFarmUnit.last_time_fed = toDateTime(newFarmUnit.last_time_fed);
     return successResponse(req, res, newFarmUnit);
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -55,18 +55,11 @@ export const updateFarmUnitHealth = async (req, res) => {
   try {
     isIdValid(req.params.id);
     const found = await FarmUnit.findOne({
-      where: { id: req.params.id },
+      where: { id: req.params.id, alive: true },
     });
-    found.health_point += 1;
-    const [numberOfAffectedRows, affectedRows] = FarmUnit.update(found, {
-      where: {
-        id: req.params.id,
-        returning: true, // needed for affectedRows to be populated
-        plain: true, // makes sure that the returned instances are just plain objects
-      },
-    });
-    const result = {};
-    result["affectedRows"] = affectedRows;
+    if (!found) throw new Error("Farm unit doesn't exist or dead");
+    found.save();
+    const result = { message: "Sucessfully updated" };
     return successResponse(req, res, result);
   } catch (error) {
     return errorResponse(req, res, error.message);

@@ -6,6 +6,10 @@ Coding Task
 
 baseurl = localhost:3000
 
+### GET - baseurl/api/v1/farm-units
+
+- Fetches all farm units
+
 ### POST - baseurl/api/v1/farm-units/
 
 - Creates farm-units for existing farm building

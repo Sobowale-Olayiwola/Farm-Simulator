@@ -29,3 +29,8 @@ baseurl = localhost:3000
 ### POST - baseurl/api/v1/farm-buildings
 
 - Creates farm-buildings
+
+## Notes on using this specified eslint configurations
+
+AirBnB;s styling brings about neatness, simplicity and gives a very fast option when a developer is focusing on code logic than looking out for why a syntaxing rule is not current.
+I used it specifically and avoided using es-lint extension due to my recent health conditions and focused more using a very simple extension.

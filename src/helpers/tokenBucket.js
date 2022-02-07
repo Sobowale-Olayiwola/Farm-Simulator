@@ -1,8 +1,12 @@
+require("dotenv").config();
 class TokenBucket {
   constructor(capacity, fillPerSecond) {
     this.capacity = capacity;
     this.tokens = capacity;
-    setInterval(() => this.addToken(), 5000 / fillPerSecond);
+    setInterval(
+      () => this.addToken(),
+      process.env.API_FARM_UNIT_FEED_INTERVAL / fillPerSecond
+    );
   }
 
   addToken() {

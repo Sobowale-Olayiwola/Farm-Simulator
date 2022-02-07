@@ -67,3 +67,15 @@ export const updateFarmUnitHealth = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+export const getAllFarmUnits = async (req, res) => {
+  try {
+    let { page, limit } = req.query;
+    page = page || 1;
+    limit = limit || 100;
+    const farmUnits = await FarmUnit.findAll({});
+    return successResponse(req, res, { farmUnits });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};

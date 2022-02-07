@@ -21,6 +21,7 @@ function limitRequests(perSecond, maxBurst) {
 }
 
 const router = express.Router();
+router.get("/farm-units", farmUnitController.getAllFarmUnits);
 router.get(
   "/farm-units/:farm_building_id",
   farmUnitController.getFarmBuildingUnitHealthRecords

@@ -12,26 +12,7 @@ export const getAllFarmBuildings = async (req, res) => {
     let { page, limit } = req.query;
     page = page || 1;
     limit = limit || 100;
-    const farmBuildings = await FarmBuilding.findAll({
-      attributes: {
-        include: [
-          [
-            Sequelize.fn("COUNT", Sequelize.col("FarmUnit.farm_building_id")),
-            "farmUnitCount",
-          ],
-        ],
-      },
-      include: [
-        {
-          model: FarmUnit,
-          attributes: [],
-          as: "farm_unit",
-        },
-      ],
-
-      offset: (page - 1) * limit,
-      limit,
-    });
+    const farmBuildings = await FarmBuilding.findAll({});
     return successResponse(req, res, { farmBuildings });
   } catch (error) {
     return errorResponse(req, res, error.message);

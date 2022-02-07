@@ -7,6 +7,7 @@
 const EventEmitter = require("events");
 import {
   getCurrentTimeInSeconds,
+  getLastTimeFed,
   getNumberOfHealthPointsToGain,
   getNumberOfHealthPointsToReduceBy,
 } from "../helpers";
@@ -45,6 +46,7 @@ appEvent.on("FARM_BUILDING_FEEDING_TIME", async () => {
           getNumberOfHealthPointsToGain(healthPointsLost);
         result[i].health_point = currentHealthPoint;
         result[i].health_point += healthPointGained;
+        result[i].last_time_fed = getLastTimeFed();
         result[i].set(result[i]);
         result[i].save();
       }

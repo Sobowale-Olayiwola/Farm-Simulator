@@ -1,11 +1,10 @@
-import { FarmBuilding, FarmUnit } from "../../models";
+import { FarmBuilding } from "../../models";
 import {
   successResponse,
   errorResponse,
   filterJOIValidation,
 } from "../../helpers";
 import { createFarmBuildingSchema } from "../../helpers/validators/farmBuilding";
-const Sequelize = require("sequelize");
 
 export const getAllFarmBuildings = async (req, res) => {
   try {

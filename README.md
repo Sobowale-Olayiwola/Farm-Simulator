@@ -30,6 +30,39 @@ baseurl = localhost:3000
 
 - Creates farm-buildings
 
+# Build the docker image
+
+- sudo docker build -t <docker-image-name> <filepath>
+  e.g docker build -t farm-simulator .
+
+# To run the container
+
+Exposed ports
+3000 8001 8080 8100
+
+# Use the command below if postgres is not run as a container on your PC
+
+- sudo docker run -d -p <Host port>:<Docker port> --env-file <name-of-environment-variable> <docker-image-name>
+  sudo docker run -d -p 3000:3000 --env-file ./.env --name farm-manager farm-simulator
+
+# Use the commands if postgres is run as a container on your PC
+
+docker container run --rm --detach --name=farm-manager-db --env POSTGRES_DB=farm_manager --env POSTGRES_PASSWORD=mysecretpassword postgres
+
+### NOTE: DB credentials passed to container should match DB credentials passed to Node .env files
+
+# Create a network group
+
+- sudo docker network create farm-manager-network
+- sudo docker network connect farm-manager-network farm-manager-db
+
+* Confirm if farm-manager-db is connected to network:
+  docker network inspect --format='{{range .Containers}} {{.Name}} {{end}}' farm-manager-network
+
+## Create application container and attach to network group
+
+- sudo docker container run --rm --detach --name farm-manager --publish 3000:3000 --network farm-manager-network --env-file ./.env farm-simulator
+
 ## Notes on using this specified eslint configurations
 
 AirBnB;s styling brings about neatness, simplicity and gives a very fast option when a developer is focusing on code logic than looking out for why a syntaxing rule is not current.

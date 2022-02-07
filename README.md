@@ -45,6 +45,11 @@ Exposed ports
 - sudo docker run -d -p <Host port>:<Docker port> --env-file <name-of-environment-variable> <docker-image-name>
   sudo docker run -d -p 3000:3000 --env-file ./.env --name farm-manager farm-simulator
 
+### Seed data into postgres
+
+- sudo docker exec -it farm-manager bash
+- npx sequelize-cli db:seed:all
+
 # Use the commands if postgres is run as a container on your PC
 
 docker container run --rm --detach --name=farm-manager-db --env POSTGRES_DB=farm_manager --env POSTGRES_PASSWORD=mysecretpassword postgres
@@ -62,6 +67,11 @@ docker container run --rm --detach --name=farm-manager-db --env POSTGRES_DB=farm
 ## Create application container and attach to network group
 
 - sudo docker container run --rm --detach --name farm-manager --publish 3000:3000 --network farm-manager-network --env-file ./.env farm-simulator
+
+### Seed data into postgres
+
+- sudo docker exec -it farm-manager bash
+- npx sequelize-cli db:seed:all
 
 ## Notes on using this specified eslint configurations
 

@@ -1,17 +1,35 @@
-import { FarmBuilding } from "../../models";
+import { FarmBuilding, sequelize } from "../../models";
+const { QueryTypes } = require("sequelize");
 import {
   successResponse,
   errorResponse,
   filterJOIValidation,
+  isIdValid,
 } from "../../helpers";
 import { createFarmBuildingSchema } from "../../helpers/validators/farmBuilding";
 
 export const getAllFarmBuildings = async (req, res) => {
   try {
-    let { page, limit } = req.query;
-    page = page || 1;
-    limit = limit || 100;
-    const farmBuildings = await FarmBuilding.findAll({});
+    const query = `SELECT
+                        fb.unit_type as unit_type,
+                        fb."name",
+                        COUNT(fu.farm_building_id) AS farm_unit_count
+                   FROM
+                        "FarmUnits" fu
+                         LEFT JOIN "FarmBuildings" fb
+                   ON 
+                         fb.id = fu.farm_building_id
+                   GROUP BY 
+                         unit_type, 
+                         name,
+                         fu.farm_building_id
+                    ;
+                  `;
+    const farmBuildings = await sequelize.query(query, {
+      plain: false,
+      raw: false,
+      type: QueryTypes.SELECT,
+    });
     return successResponse(req, res, { farmBuildings });
   } catch (error) {
     return errorResponse(req, res, error.message);

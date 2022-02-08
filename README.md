@@ -48,6 +48,7 @@ Exposed ports
 ### Seed data into postgres
 
 - sudo docker exec -it farm-manager bash
+- npx sequelize-cli db:migrate
 - npx sequelize-cli db:seed:all
 
 # Use the commands if postgres is run as a container on your PC
@@ -71,6 +72,7 @@ docker container run --rm --detach --name=farm-manager-db --env POSTGRES_DB=farm
 ### Seed data into postgres
 
 - sudo docker exec -it farm-manager bash
+- npx sequelize-cli db:migrate
 - npx sequelize-cli db:seed:all
 
 ## Notes on using this specified eslint configurations
